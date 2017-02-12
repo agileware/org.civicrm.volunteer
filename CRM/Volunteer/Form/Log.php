@@ -84,12 +84,11 @@ class CRM_Volunteer_Form_Log extends CRM_Core_Form {
       $this->_title .= ' )';
     }
 
-    /*
-     * Because CiviCRM's asset management framework isn't mature yet (e.g., adding
-     * assets to forms rendered in pop-ups using CRM_Core_Resources doesn't work),
-     * we pass a URL fragment to the template and include them via HTML.
-     */
-    $this->assign('extResourceURL', CRM_Core_Resources::singleton()->getUrl('org.civicrm.volunteer'));
+    CRM_Core_Resources::singleton()
+        ->addScriptFile('org.civicrm.volunteer', 'js/CRM_Volunteer_Form_Log.js')
+        ->addStyleFile('org.civicrm.volunteer', 'css/commendation.css')
+        ->addScriptFile('org.civicrm.volunteer', 'js/commendation.js');
+
     $this->assign('vid', $this->_vid);
   }
 
@@ -237,7 +236,8 @@ class CRM_Volunteer_Form_Log extends CRM_Core_Form {
       $defaults['field'][$i]['volunteer_role'] = CRM_Utils_Array::value($data['volunteer_role_id'], $volunteerRole);
       $defaults['field'][$i]['volunteer_status'] = $data['status_id'];
       $defaults['field'][$i]['activity_id'] = $data['id'];
-      $defaults['field'][$i]['start_date'] = CRM_Utils_Date::customFormat($data['activity_date_time'], "%m/%E/%Y %l:%M %P");
+      $defaults['field'][$i]['start_date'] = CRM_Utils_Date::customFormat($data['activity_date_time']);
+      //Removed US date format: "%m/%E/%Y %l:%M %P " 
       $defaults['field'][$i]["contact_id"] = $data['contact_id'];
       $i++;
     }
