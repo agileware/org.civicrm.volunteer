@@ -18,17 +18,7 @@
               <input type='button' value="{ts domain='org.civicrm.volunteer'}Email{/ts}" />
             </a>
           {/if}
-          {if $assignment.email && $assignment.phone}
-            |
-          {/if}
-          {if $assignment.phone}
-            <a href="tel:{$assignment.phone}" title="{ts 1=$assignment.name domain='org.civicrm.volunteer'}Telephone %1.{/ts}">
-              <input type='button' value='{ts domain='org.civicrm.volunteer'}Call{/ts}'/>
-            </a>  |
-            <a href="sms:{$assignment.phone}" title="{ts 1=$assignment.name domain='org.civicrm.volunteer'}Send %1 an SMS message.{/ts}">
-              <input type='button' value='{ts domain='org.civicrm.volunteer'}SMS{/ts}'/>
-            </a>
-            {/if}
+	  {* Removed phone links for #24777 *}
         </td>
       </tr>
     {/foreach}
