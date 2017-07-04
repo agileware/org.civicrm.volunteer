@@ -16,6 +16,61 @@ Required vars: volOppData(), searchParams
     </p>
   </div>
 
+  <!-- Results -->
+  <div class="crm-vol-opp-results messages status no-popup" ng-show="_.size(volOppData()) === 0">
+    <div class="icon inform-icon"></div>
+    {{ts('No results found. Please try different search criteria.')}}
+  </div>
+  <div class="crm-vol-opp-results" ng-show="_.size(volOppData()) > 0">
+    <h2>{{ts('Available Volunteer Opportunities')}}</h2>
+    <p class="description">
+      {{ts('For additional project or role detail, click the corresponding detail icon in the table below.')}}
+      <span class="icon ui-icon-comment"></span>
+    </p>
+    <table class="display dataTable no-footer" role="grid">
+      <thead>
+      <tr role="row">
+        <th class="ui-state-default crm-vol-opp-project">{{ts('Project')}}</th>
+        <th class="ui-state-default crm-vol-opp-beneficiary">{{ts('With')}}</th>
+        <th class="ui-state-default crm-vol-opp-role">{{ts('Role')}}</th>
+        <th class="ui-state-default crm-vol-opp-time">{{ts('Time')}}</th>
+        <th class="ui-state-default crm-vol-opp-toggle">{{ts('Sign up!')}}</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="need in volOppData()" role="row" class="crm-vol-opp-need-{{need.id}}">
+          <td class="crm-vol-opp-project">
+          {{need.project.title}}
+            <span
+              class="icon ui-icon-comment"
+              ng-show="need.project.description"
+              ng-click="showProjectDescription(need.project)">
+            </span>
+        </td>
+        <td class="crm-vol-opp-beneficiary">
+          <span class="beneficiary" ng-repeat="ben in need.project.beneficiaries">{{ben.display_name}}</span>
+        </td>
+        <td class="crm-vol-opp-role">{{need.role_label}}
+            <span
+              class="icon ui-icon-comment"
+              ng-show="need.role_description"
+              ng-click="showRoleDescription(need)">
+            </span>
+        </td>
+        <td class="crm-vol-opp-time">{{need.display_time}}</td>
+        <td class="crm-vol-opp-toggle">
+          <input
+            type="checkbox"
+            ng-checked="need.inCart"
+            ng-click="toggleSelection(need)"
+            class="crm-form-checkbox"
+          />
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Search Form -->
   <div class="crm-vol-half-responsive crm-vol-opp-show-hidden-search" ng-show="allowShowSearch">
     <div class="crm-buttons">
@@ -187,61 +242,5 @@ Required vars: volOppData(), searchParams
       </div>
     </div>
   </div>
-
-  <div class="clear"></div>
-
-  <!-- Results -->
-  <div class="crm-vol-opp-results messages status no-popup" ng-show="_.size(volOppData()) === 0">
-    <div class="icon inform-icon"></div>
-    {{ts('No results found. Please try different search criteria.')}}
-  </div>
-  <div class="crm-vol-opp-results" ng-show="_.size(volOppData()) > 0">
-    <h2>{{ts('Available Volunteer Opportunities')}}</h2>
-    <p class="description">
-      {{ts('For additional project or role detail, click the corresponding detail icon in the table below.')}}
-      <span class="icon ui-icon-comment"></span>
-    </p>
-    <table class="display dataTable no-footer" role="grid">
-      <thead>
-      <tr role="row">
-        <th class="ui-state-default crm-vol-opp-project">{{ts('Project')}}</th>
-        <th class="ui-state-default crm-vol-opp-beneficiary">{{ts('With')}}</th>
-        <th class="ui-state-default crm-vol-opp-role">{{ts('Role')}}</th>
-        <th class="ui-state-default crm-vol-opp-time">{{ts('Time')}}</th>
-        <th class="ui-state-default crm-vol-opp-toggle">{{ts('Sign up!')}}</th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="need in volOppData()" role="row" class="crm-vol-opp-need-{{need.id}}">
-          <td class="crm-vol-opp-project">
-          {{need.project.title}}
-            <span
-              class="icon ui-icon-comment"
-              ng-show="need.project.description"
-              ng-click="showProjectDescription(need.project)">
-            </span>
-        </td>
-        <td class="crm-vol-opp-beneficiary">
-          <span class="beneficiary" ng-repeat="ben in need.project.beneficiaries">{{ben.display_name}}</span>
-        </td>
-        <td class="crm-vol-opp-role">{{need.role_label}}
-            <span
-              class="icon ui-icon-comment"
-              ng-show="need.role_description"
-              ng-click="showRoleDescription(need)">
-            </span>
-        </td>
-        <td class="crm-vol-opp-time">{{need.display_time}}</td>
-        <td class="crm-vol-opp-toggle">
-          <input
-            type="checkbox"
-            ng-checked="need.inCart"
-            ng-click="toggleSelection(need)"
-            class="crm-form-checkbox"
-          />
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
+<div class="clear"></div>
