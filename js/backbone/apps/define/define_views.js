@@ -75,12 +75,17 @@
         } else {
           mode = 'flexible';
         }
+        needViewItem.model.set('schedule_type', mode);
 
         needViewItem.$('select[name=schedule_type]').val(mode);
         this.toggleTimeComponents(mode, false);
       },
 
       changeScheduleType: function (e) {
+        var field_name = e.currentTarget.name;
+        var thisNeed = this;
+        var value = e.currentTarget.value;
+        thisNeed.model.set(field_name, value);
         this.toggleTimeComponents(e.currentTarget.value);
       },
 
@@ -137,6 +142,16 @@
         var field_name = e.currentTarget.name;
         var thisNeed = this;
         var value = e.currentTarget.value;
+
+        var currentValue = thisNeed.model.get(field_name);
+        thisNeed.model.set(field_name, value);
+
+        if(!thisNeed.model.isValid()) {
+          CRM.alert(thisNeed.model.validationError, 'Error', 'error', {expires: 4000});
+          thisNeed.model.set(field_name, currentValue);
+          return;
+        }
+        thisNeed.model.set(field_name, currentValue);
 
         function pad(number) {
           var r = String(number);

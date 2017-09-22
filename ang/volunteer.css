@@ -157,3 +157,13 @@ span.crm-button-text {
 #crm-vol-form-textarea-wrapper {
   clear: left;
 }
+
+.crm-vol-hint {
+  font-style: italic;
+  font-size: 11px;
+}
+
+.crm-vol-define-flexible-needs {
+  padding-bottom: 10px;
+  padding-top: 5px;
+}

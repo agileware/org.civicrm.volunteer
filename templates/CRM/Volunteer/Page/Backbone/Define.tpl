@@ -33,10 +33,10 @@
     {help id="volunteer-define" file="CRM/Volunteer/Page/Backbone/Define.hlp" isModulePermissionSupported=`$isModulePermissionSupported`}
   </div>
   <form class="crm-block crm-form-block crm-event-manage-volunteer-form-block">
+    <div id="crm-vol-define-flexible-needs-region" class="crm-vol-define-flexible-needs"></div>
     <div id="crm-vol-define-scheduled-needs-region">
       <div class="crm-loading-element">{ts domain='org.civicrm.volunteer'}Loading{/ts}...</div>
     </div>
-    <div id="crm-vol-define-flexible-needs-region"></div>
   </form>
 </script>
 
@@ -92,11 +92,11 @@
     <table class="time_components">
       <thead>
         <tr>
-          <th class="start_datetime">{ts domain='org.civicrm.volunteer'}Start Date/Time{/ts}</th>
+          <th class="start_datetime">{ts domain='org.civicrm.volunteer'}Start Date/Time *{/ts}</th>
           <th class="end_datetime">
-          {ts domain='org.civicrm.volunteer'}End Date/Time{/ts}
+          {ts domain='org.civicrm.volunteer'}End Date/Time *{/ts}
           </th>
-          <th class="duration">{ts domain='org.civicrm.volunteer'}Minutes{/ts}</th>
+          <th class="duration">{ts domain='org.civicrm.volunteer'}Minutes *{/ts}</th>
         </tr>
       </thead>
       <tbody>
@@ -123,7 +123,8 @@
 
 <script type="text/template" id="crm-vol-define-flexible-need-tpl">
   <input type="checkbox" name="visibility_id" id="crm-vol-visibility-id" value="<%= visibilityValue %>">
-  <label for="crm-vol-visibility-id">Allow users to sign up without specifying a shift.</label>
+  <label for="crm-vol-visibility-id">Allow users to sign up without specifying a shift.</label><br>
+  <span class="crm-vol-hint">This will create an extra Volunteer opportunity for this project with a role of "Any" and time of "Any".</span>
 </script>
 
 <script type="text/template" id="crm-vol-define-add-row-tpl">

@@ -15,8 +15,17 @@ CRM.volunteerApp.module('Entities', function(Entities, volunteerApp, Backbone, M
       'end_time': null,
       'quantity': null,
       'filled': null,
+      'schedule_type': '', // generated in initializeTimeComponents
       'userAdded': false, // see this.createNewNeed() and initializeTimeComponents() in the view
       'visibility_id': CRM.pseudoConstant.volunteer_need_visibility.public
+    },
+    validate: function (attrs) {
+        if (attrs.schedule_type == 'shift' && (!attrs.display_start_date || !attrs.display_start_time || !attrs.duration)) {
+            return 'Start Date/Time and Duration required for shift schedule type.';
+        }
+        if (attrs.schedule_type == 'flexible' && (!attrs.display_start_date || !attrs.display_start_time || !attrs.display_end_date || !attrs.display_end_time || !attrs.duration)) {
+            return 'Start Date/Time, End Date/Time and Duration required for flexible schedule type.';
+        }
     }
   });
 
