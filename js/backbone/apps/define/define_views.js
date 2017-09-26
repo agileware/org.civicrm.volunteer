@@ -136,6 +136,13 @@
             }
             break;
         }
+        if(!needViewItem.model.isValid()) {
+          needViewItem.$('.need_error_message').show();
+          needViewItem.$('.need_error_message').text(needViewItem.model.validationError);
+          return;
+        } else {
+          needViewItem.$('.need_error_message').hide();
+        }
       },
 
       updateNeed: function(e) {
