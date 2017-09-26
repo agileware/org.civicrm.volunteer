@@ -92,11 +92,9 @@
     <table class="time_components">
       <thead>
         <tr>
-          <th class="start_datetime">{ts domain='org.civicrm.volunteer'}Start Date/Time *{/ts}</th>
-          <th class="end_datetime">
-          {ts domain='org.civicrm.volunteer'}End Date/Time *{/ts}
-          </th>
-          <th class="duration">{ts domain='org.civicrm.volunteer'}Minutes *{/ts}</th>
+          <th class="start_datetime">{ts domain='org.civicrm.volunteer'}Start Date/Time{/ts} <span class="crm-marker" title="{ts}This field is required.{/ts}">*</span></th>
+          <th class="end_datetime">{ts domain='org.civicrm.volunteer'}End Date/Time{/ts} <span class="crm-marker" title="{ts}This field is required.{/ts}">*</span></th>
+          <th class="duration">{ts domain='org.civicrm.volunteer'}Minutes{/ts} <span class="crm-marker" title="{ts}This field is required.{/ts}">*</span></th>
         </tr>
       </thead>
       <tbody>
