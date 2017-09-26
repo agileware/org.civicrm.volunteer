@@ -111,6 +111,11 @@
             <input type="text" class="crm-form-text" name="duration" value="<%= duration %>" size="6">
           </td>
         </tr>
+
+        <tr>
+          <td colspan="3" class="need_error_message">
+          </td>
+        </tr>
       </tbody>
     </table>
   </td>

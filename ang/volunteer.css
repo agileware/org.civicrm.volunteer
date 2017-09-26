@@ -167,3 +167,8 @@ span.crm-button-text {
   padding-bottom: 10px;
   padding-top: 5px;
 }
+
+.need_error_message {
+  display: none;
+  color: #ff0000;
+}

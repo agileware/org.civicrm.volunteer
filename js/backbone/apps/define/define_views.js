@@ -147,9 +147,11 @@
         thisNeed.model.set(field_name, value);
 
         if(!thisNeed.model.isValid()) {
-          CRM.alert(thisNeed.model.validationError, 'Error', 'error', {expires: 4000});
-          thisNeed.model.set(field_name, currentValue);
+          thisNeed.$('.need_error_message').show();
+          thisNeed.$('.need_error_message').text(thisNeed.model.validationError);
           return;
+        } else {
+          thisNeed.$('.need_error_message').hide();
         }
         thisNeed.model.set(field_name, currentValue);
 
