@@ -162,6 +162,9 @@ class CRM_Volunteer_BAO_Need extends CRM_Volunteer_DAO_Need {
 
     if (strtotime($end)) {
       $result .= ' - ' . CRM_Utils_Date::customFormat($end, $timeFormat);
+      if(CRM_Utils_Type::validate($duration, 'Positive', FALSE)) {
+        $result .= ' (' . $duration . ' minutes)';
+      }
     } elseif (CRM_Utils_Type::validate($duration, 'Positive', FALSE)) {
       $date = new DateTime($start);
       $startDay = $date->format('Y-m-d');

@@ -70,12 +70,14 @@ class CRM_Volunteer_BAO_NeedSearch {
     foreach ($projects as $project) {
       $results = array();
 
-      $flexibleNeed = civicrm_api3('VolunteerNeed', 'getsingle', array(
-        'id' => $project->flexible_need_id,
-      ));
-      if ($flexibleNeed['visibility_id'] === CRM_Core_OptionGroup::getValue('visibility', 'public', 'name')) {
-        $needId = $flexibleNeed['id'];
-        $results[$needId] = $flexibleNeed;
+      if(!empty($project->flexible_need_id)) {
+        $flexibleNeed = civicrm_api3('VolunteerNeed', 'getsingle', array(
+          'id' => $project->flexible_need_id,
+        ));
+        if ($flexibleNeed['visibility_id'] === CRM_Core_OptionGroup::getValue('visibility', 'public', 'name')) {
+          $needId = $flexibleNeed['id'];
+          $results[$needId] = $flexibleNeed;
+        }
       }
 
       $openNeeds = $project->open_needs;

@@ -76,7 +76,7 @@ function civicrm_api3_volunteer_need_get($params) {
   $result = _civicrm_api3_basic_get(_civicrm_api3_get_BAO(__FUNCTION__), $params);
   if (!empty($result['values'])) {
     foreach ($result['values'] as &$need) {
-      if (!empty($need['start_time'])) {
+      if (!empty($need['start_time']) && (!empty($need['end_time']) || !empty($need['duration']))) {
         $need['display_time'] = CRM_Volunteer_BAO_Need::getTimes($need['start_time'],
           CRM_Utils_Array::value('duration', $need),
           CRM_Utils_Array::value('end_time', $need));
@@ -185,4 +185,3 @@ function civicrm_api3_volunteer_need_getsearchresult($params) {
 function civicrm_api3_volunteer_need_delete($params) {
   return _civicrm_api3_basic_delete('CRM_Volunteer_BAO_Need', $params);
 }
-

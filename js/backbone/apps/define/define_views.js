@@ -75,12 +75,17 @@
         } else {
           mode = 'flexible';
         }
+        needViewItem.model.set('schedule_type', mode);
 
         needViewItem.$('select[name=schedule_type]').val(mode);
         this.toggleTimeComponents(mode, false);
       },
 
       changeScheduleType: function (e) {
+        var field_name = e.currentTarget.name;
+        var thisNeed = this;
+        var value = e.currentTarget.value;
+        thisNeed.model.set(field_name, value);
         this.toggleTimeComponents(e.currentTarget.value);
       },
 
@@ -131,12 +136,31 @@
             }
             break;
         }
+        if(!needViewItem.model.isValid()) {
+          needViewItem.$('.need_error_message').show();
+          needViewItem.$('.need_error_message').text(needViewItem.model.validationError);
+          return;
+        } else {
+          needViewItem.$('.need_error_message').hide();
+        }
       },
 
       updateNeed: function(e) {
         var field_name = e.currentTarget.name;
         var thisNeed = this;
         var value = e.currentTarget.value;
+
+        var currentValue = thisNeed.model.get(field_name);
+        thisNeed.model.set(field_name, value);
+
+        if(!thisNeed.model.isValid()) {
+          thisNeed.$('.need_error_message').show();
+          thisNeed.$('.need_error_message').text(thisNeed.model.validationError);
+          return;
+        } else {
+          thisNeed.$('.need_error_message').hide();
+        }
+        thisNeed.model.set(field_name, currentValue);
 
         function pad(number) {
           var r = String(number);
