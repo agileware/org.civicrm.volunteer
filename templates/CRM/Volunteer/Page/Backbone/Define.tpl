@@ -111,13 +111,9 @@
             <input type="text" class="crm-form-text" name="duration" value="<%= duration %>" size="6">
           </td>
         </tr>
-
-        <tr>
-          <td colspan="3" class="need_error_message">
-          </td>
-        </tr>
       </tbody>
     </table>
+    <div class="need_error_message messages error"></div>
   </td>
   <td><input type="checkbox" name="visibility_id" value="<%= visibilityValue %>"></td>
   <td><input type="checkbox" name="is_active" value="1"></td>
