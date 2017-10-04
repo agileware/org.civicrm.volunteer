@@ -34,6 +34,14 @@ class CRM_Volunteer_Angular {
       ),
     ));
 
+    $cvsetting = civicrm_api('Setting', 'getsingle', array(
+        'version' => 3,
+        'group' => 'org.civicrm.volunteer',
+        'return' => array('volunteer_floating_cart_enabled','volunteer_show_cart_contents'),
+      ));
+
+    \Civi::resources()->addSetting(array('CiviVolunteer' => $cvsetting));
+
     self::$loaded = TRUE;
   }
 
