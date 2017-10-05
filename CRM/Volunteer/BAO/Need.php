@@ -163,7 +163,26 @@ class CRM_Volunteer_BAO_Need extends CRM_Volunteer_DAO_Need {
     if (strtotime($end)) {
       $result .= ' - ' . CRM_Utils_Date::customFormat($end, $timeFormat);
       if(CRM_Utils_Type::validate($duration, 'Positive', FALSE)) {
-        $result .= ' (' . $duration . ' minutes)';
+        $minutes = $duration % 60;
+        $hours = ($duration - $minutes) / 60;
+        if ($hours > 0) {
+          if($minutes > 0) {
+            $result .= ts(' (%count hour %2 minutes)', array(
+                         'count' => $hours,
+                         '2' => $minutes,
+                         'plural' => ' (%count hours %2 minutes)'
+                       ));
+          }
+          else {
+            $result .= ts(' (%count hour)', array(
+                         'count' => $hours,
+                         'plural' => ' (%count hours)'
+                       ));
+          }
+        }
+        else {
+          $result .= ts(' (%1 minutes)', array(1 => $minutes));
+        }
       }
     } elseif (CRM_Utils_Type::validate($duration, 'Positive', FALSE)) {
       $date = new DateTime($start);
