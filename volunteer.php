@@ -677,6 +677,7 @@ function volunteer_civicrm_angularModules(&$angularModules) {
       'crmUi',
       'crmUtil',
       'ngRoute',
+      'ngSanitize',
     ),
     'js' =>
       array (
