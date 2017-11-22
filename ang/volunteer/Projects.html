@@ -85,7 +85,9 @@
           <a ng-if="canLinkToAssociatedEntity(project)" ng-click="linkToAssociatedEntity(project)">{{associatedEntityTitle(project)}}</a>
           <span ng-if="!canLinkToAssociatedEntity(project)">{{associatedEntityTitle(project)}}</span>
         </td>
-        <td class="crm-vol-manage-beneficiaries" ng-bind-html="formatBeneficiaries(project)"></td>
+        <td class="crm-vol-manage-beneficiaries">
+          <ng-container ng-repeat="beneficiary in project.beneficiaries">{{ beneficiary.display_name }}<br /></ng-container>
+        </td>
         <td class="crm-vol-manage-location" ng-bind-html="formatLocation(project)"></td>
         <td class="crm-vol-manage-active">{{ project.is_active == 1 ? ts("Yes") : ts("No") }}</td>
         <td class="crm-vol-manage-actionlinks right nowrap">

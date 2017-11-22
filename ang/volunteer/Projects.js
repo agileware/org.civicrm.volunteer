@@ -8,25 +8,13 @@
         // If you need to look up data when opening the page, list it out
         // under "resolve".
         resolve: {
-          // TODO for VOL-276: Factor this out. api.VolunteerUtil.getbeneficiaries
-          // is deprecated in favor of api.VolunteerProjectContact.getList.
-          beneficiaries: function (crmApi) {
-            return crmApi('VolunteerUtil', 'getbeneficiaries').then(function(data) {
-              return data.values;
-            }, function(error) {
-              if (error.is_error) {
-                CRM.alert(error.error_message, ts("Error"), "error");
-              } else {
-                return error;
-              }
-            });
-          },
           projectData: function(crmApi) {
             return crmApi('VolunteerProject', 'get', {
               sequential: 1,
               context: 'edit',
               'api.VolunteerProjectContact.get': {
-                relationship_type_id: "volunteer_beneficiary"
+                relationship_type_id: "volunteer_beneficiary",
+                return: "contact_id.display_name",
               },
               'api.VolunteerProject.getlocblockdata': {
                 id: '$value.loc_block_id',
@@ -39,7 +27,7 @@
               return _.each(data.values, function (element, index, list) {
                 var beneficiaryIds = [];
                 _.each(element['api.VolunteerProjectContact.get']['values'], function (el) {
-                  beneficiaryIds.push(el.contact_id);
+                  beneficiaryIds.push({contact_id: el.contact_id, display_name: el['contact_id.display_name']});
                 });
                 list[index].beneficiaries = beneficiaryIds;
               });
@@ -59,7 +47,7 @@
   );
 
   // TODO for VOL-276: Remove reference to beneficiaries object, based on deprecated API.
-  angular.module('volunteer').controller('VolunteerProjects', function ($scope, $filter, crmApi, crmStatus, crmUiHelp, projectData, $location, volunteerBackbone, beneficiaries, campaigns, $window) {
+  angular.module('volunteer').controller('VolunteerProjects', function ($scope, $filter, crmApi, crmStatus, crmUiHelp, projectData, $location, volunteerBackbone, campaigns, $window) {
     // The ts() and hs() functions help load strings for this module.
     var ts = $scope.ts = CRM.ts('org.civicrm.volunteer');
     var hs = $scope.hs = crmUiHelp({file: 'CRM/volunteer/Projects'}); // See: templates/CRM/volunteer/Projects.hlp
@@ -70,8 +58,6 @@
     $scope.projects = projectData;
     $scope.batchAction = "";
     $scope.allSelected = false;
-    // TODO for VOL-276: Remove reference to beneficiaries object, based on deprecated API.
-    $scope.beneficiaries = beneficiaries;
     $scope.campaigns = campaigns;
     $scope.needBase = CRM.url("civicrm/volunteer/need");
     $scope.assignBase = CRM.url("civicrm/volunteer/assign");
@@ -132,19 +118,6 @@
       }
 
       return result;
-    };
-
-    // TODO for VOL-276: Replace or obviate the need for this method. This is
-    // the blocker to removing the deprecated api.VolunteerUtil.getbeneficiaries.
-    // Other related changes are trivial.
-    $scope.formatBeneficiaries = function (project) {
-      var displayNames = [];
-
-      _.each(project.beneficiaries, function (item) {
-        displayNames.push($scope.beneficiaries[item].display_name);
-      });
-
-      return displayNames.sort().join('<br />');
     };
 
     $scope.linkToAssociatedEntity = function(project) {
